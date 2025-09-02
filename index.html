@@ -2,130 +2,84 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Calculateur Cape Cercle</title>
+  <title>Calculateur Cape Cercle @Meilynas</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f9fc;
-      color: #333;
-      text-align: center;
-      padding: 20px;
-    }
-    h1 {
-      color: #4a6fa5;
-    }
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    label {
-      display: block;
-      margin: 10px 0 5px;
-      font-weight: bold;
-    }
-    input {
-      padding: 8px;
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-    button {
-      background: #4a6fa5;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin: 5px;
-    }
-    button:hover {
-      background: #365781;
-    }
-    .output {
-      background: #eef4ff;
-      padding: 15px;
-      margin-top: 20px;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-    .error {
-      color: red;
-      margin-top: 10px;
-      font-weight: bold;
-    }
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f8f9fa; color: #333; }
+    h1 { text-align: center; color: #2c3e50; }
+    h2 { margin-top: 30px; color: #34495e; }
+    table { border-collapse: collapse; width: 100%; max-width: 600px; margin: 20px auto; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.1); border-radius: 10px; }
+    th, td { padding: 12px; text-align: left; }
+    th { background: #2c3e50; color: white; }
+    input { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 6px; }
+    .button-group { text-align: center; margin-top: 20px; }
+    button { padding: 10px 20px; margin: 5px; border: none; border-radius: 8px; background: #2c3e50; color: white; cursor: pointer; }
+    button:hover { background: #1a242f; }
+    .error { color: red; font-weight: bold; text-align: center; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Calculateur Cape Cercle</h1>
+  <h1>Calculateur Cape Cercle @Meilynas</h1>
+  
+  <h2>Paramètres de la cape (cm)</h2>
+  <table>
+    <tr><th>Mesures finales</th><th>Valeur</th></tr>
+    <tr><td>Tour de Col (TC)</td><td><input id="TC" type="number" step="0.1" placeholder="47"></td></tr>
+    <tr><td>Longueur de la Cape devant (LDV)</td><td><input id="LDV" type="number" step="0.1" placeholder="30"></td></tr>
+    <tr><td>Longueur de la Cape dos (LDS)</td><td><input id="LDS" type="number" step="0.1" placeholder="50"></td></tr>
+    <tr><td>Ourlet du Col (OCL)</td><td><input id="OCL" type="number" step="0.1" placeholder="1,5"></td></tr>
+    <tr><td>Ourlet de la Cape (OCP)</td><td><input id="OCP" type="number" step="0.1" placeholder="1,5"></td></tr>
+  </table>
 
-    <h2>Tableau 1 - Mesures finales (cm)</h2>
-    <label for="tc">Tour de Col (TC) :</label>
-    <input type="number" id="tc" step="0.1">
-
-    <label for="ldv">Longueur de la Cape devant (LDV) :</label>
-    <input type="number" id="ldv" step="0.1">
-
-    <label for="lds">Longueur de la Cape dos (LDS) :</label>
-    <input type="number" id="lds" step="0.1">
-
-    <label for="ocl">Ourlet du Col (OCL) :</label>
-    <input type="number" id="ocl" step="0.1" placeholder="ex: 1.5">
-
-    <label for="ocp">Ourlet de la Cape (OCP) :</label>
-    <input type="number" id="ocp" step="0.1" placeholder="ex: 1.5">
-
+  <div class="button-group">
     <button onclick="calculer()">Calculer</button>
     <button onclick="reinitialiser()">Réinitialiser</button>
-
-    <div id="resultat" class="output"></div>
-    <div id="erreur" class="error"></div>
   </div>
 
+  <h2>Valeurs pour la découpe du tissu (cm)</h2>
+  <table>
+    <tr><th>Paramètre</th><th>Valeur</th></tr>
+    <tr><td>Rayon du Grand Cercle (RGC)</td><td id="RGC">-</td></tr>
+    <tr><td>Pliure (P)</td><td id="P">-</td></tr>
+    <tr><td>Rayon du Petit Cercle (RPC)</td><td id="RPC">-</td></tr>
+    <tr><td>Métrage recommandé, pour une laize de 150 cm</td><td id="METRAGE">-</td></tr>
+  </table>
+
+  <p class="error" id="message"></p>
+
   <script>
+    function formatNombre(valeur) {
+      return valeur.toFixed(1).replace('.', ',');
+    }
+
     function calculer() {
-      const tc = parseFloat(document.getElementById("tc").value) || 0;
-      const ldv = parseFloat(document.getElementById("ldv").value) || 0;
-      const lds = parseFloat(document.getElementById("lds").value) || 0;
-      const ocl = parseFloat(document.getElementById("ocl").value) || 0;
-      const ocp = parseFloat(document.getElementById("ocp").value) || 0;
+      const TC = parseFloat(document.getElementById("TC").value.replace(',', '.')) || 0;
+      const LDV = parseFloat(document.getElementById("LDV").value.replace(',', '.')) || 0;
+      const LDS = parseFloat(document.getElementById("LDS").value.replace(',', '.')) || 0;
+      const OCL = parseFloat(document.getElementById("OCL").value.replace(',', '.')) || 0;
+      const OCP = parseFloat(document.getElementById("OCP").value.replace(',', '.')) || 0;
 
-      // Formules
-      const rpc = (tc / (2 * Math.PI)) - ocl;
-      const rgc = rpc + ocl + ocp + (ldv + lds) / 2;
-      const pliure = ldv + ocp + rpc + ocl;
-      const metrage = rgc + rpc + ocp;
+      const RPC = (TC / (2 * Math.PI)) - OCL;
+      const RGC = RPC + OCL + OCP + (LDV + LDS) / 2;
+      const P = LDV + OCP + RPC + OCL;
+      const METRAGE = 2 * (RGC + RPC + OCP);
 
-      let message = `
-        Rayon du Petit Cercle (RPC) : ${rpc.toFixed(2)} cm<br>
-        Rayon du Grand Cercle (RGC) : ${rgc.toFixed(2)} cm<br>
-        Pliure (P) : ${pliure.toFixed(2)} cm<br>
-        Métrage recommandé : ${metrage.toFixed(2)} cm
-      `;
+      document.getElementById("RGC").innerText = formatNombre(RGC);
+      document.getElementById("P").innerText = formatNombre(P);
+      document.getElementById("RPC").innerText = formatNombre(RPC);
 
-      document.getElementById("resultat").innerHTML = message;
-
-      if (metrage > 75) {
-        document.getElementById("erreur").innerHTML = 
-          "⚠️ Impossible avec une laize de 150 cm. Veuillez entrer de nouvelles valeurs.";
+      if (METRAGE > 150) {
+        document.getElementById("METRAGE").innerText = "-";
+        document.getElementById("message").innerText = "⚠️ Impossible avec une laize de 150 cm, votre cape est trop longue. Veuillez entrer de nouvelles valeurs.";
       } else {
-        document.getElementById("erreur").innerHTML = "";
+        document.getElementById("METRAGE").innerText = formatNombre(METRAGE);
+        document.getElementById("message").innerText = "";
       }
     }
 
     function reinitialiser() {
-      document.getElementById("tc").value = "";
-      document.getElementById("ldv").value = "";
-      document.getElementById("lds").value = "";
-      document.getElementById("ocl").value = "";
-      document.getElementById("ocp").value = "";
-      document.getElementById("resultat").innerHTML = "";
-      document.getElementById("erreur").innerHTML = "";
+      document.querySelectorAll("input").forEach(input => input.value = "");
+      document.querySelectorAll("td[id]").forEach(td => td.innerText = "-");
+      document.getElementById("message").innerText = "";
     }
   </script>
 </body>
