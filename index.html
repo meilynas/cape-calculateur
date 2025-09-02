@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculateur Cape Cercle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    input {
+      width: 100%;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .output td {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Calculateur Cape Cercle</h2>
+
+    <!-- Tableau 1 : mesures -->
+    <table>
+      <caption>Mesures finales de la cape (cm)</caption>
+      <tr>
+        <th>Tour de Col (TC)</th>
+        <td><input type="number" id="tc" placeholder="Ex: 40"></td>
+      </tr>
+      <tr>
+        <th>Longueur Cape Devant (LDV)</th>
+        <td><input type="number" id="ldv" placeholder="Ex: 60"></td>
+      </tr>
+      <tr>
+        <th>Longueur Cape Dos (LDS)</th>
+        <td><input type="number" id="lds" placeholder="Ex: 70"></td>
+      </tr>
+      <tr>
+        <th>Ourlet du Col (OCL)</th>
+        <td><input type="number" id="ocl" placeholder="Ex: 2"></td>
+      </tr>
+      <tr>
+        <th>Ourlet de la Cape (OCP)</th>
+        <td><input type="number" id="ocp" placeholder="Ex: 4"></td>
+      </tr>
+    </table>
+
+    <button onclick="calculerCape()">Calculer</button>
+
+    <!-- Tableau 2 : output -->
+    <table class="output">
+      <caption>Valeurs pour la découpe du tissu (cm)</caption>
+      <tr>
+        <th>Rayon du Grand Cercle (RGC)</th>
+        <td id="rgc">-</td>
+      </tr>
+      <tr>
+        <th>Pliure (P)</th>
+        <td id="pliure">-</td>
+      </tr>
+      <tr>
+        <th>Rayon du Petit Cercle (RPC)</th>
+        <td id="rpc">-</td>
+      </tr>
+      <tr>
+        <th>Métrage de tissu recommandé (laize 150 cm)</th>
+        <td id="metrage">-</td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    function calculerCape() {
+      const TC = parseFloat(document.getElementById('tc').value);
+      const LDV = parseFloat(document.getElementById('ldv').value);
+      const LDS = parseFloat(document.getElementById('lds').value);
+      const OCL = parseFloat(document.getElementById('ocl').value);
+      const OCP = parseFloat(document.getElementById('ocp').value);
+
+      if ([TC, LDV, LDS, OCL, OCP].some(isNaN)) {
+        alert("Merci d'entrer toutes les mesures !");
+        return;
+      }
+
+      // Calculs selon tes formules
+      const RPC = (TC / (2 * Math.PI)) - OCL;
+      const RGC = RPC + OCL + OCP + (LDV + LDS)/2;
+      const P = LDV + OCP + RPC + OCL;
+      const metrage = RGC + RPC + OCP;
+
+      // Affichage
+      document.getElementById('rgc').textContent = RGC.toFixed(1);
+      document.getElementById('pliure').textContent = P.toFixed(1);
+      document.getElementById('rpc').textContent = RPC.toFixed(1);
+      document.getElementById('metrage').textContent = metrage.toFixed(1);
+    }
+  </script>
+</body>
+</html>
