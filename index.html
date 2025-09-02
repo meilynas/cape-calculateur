@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Calculateur Cape Cercle @Meilynas</title>
+  <title>Calculateur - Couture d'une Cape Cercle - @Meilynas</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -93,11 +93,14 @@
 <body>
 
   <div class="main-container">
-    <h1>Calculateur Cape Cercle @Meilynas</h1>
+    <h1>
+    Calculateur <br>
+    Couture d'une Cape Cercle <br>
+    @Meilynas
+    </h1>
 
-    <h2>Paramètres de la cape (cm)</h2>
     <table>
-      <tr><th>Mesures finales</th></tr>
+      <tr><th>Paramètres de la cape (cm)</th></tr>
       <tr><td>Tour de Col (TC) : <input type="text" id="tc" placeholder="47"></td></tr>
       <tr><td>Longueur de la Cape devant (LDV) : <input type="text" id="ldv" placeholder="30"></td></tr>
       <tr><td>Longueur de la Cape dos (LDS) : <input type="text" id="lds" placeholder="50"></td></tr>
@@ -108,9 +111,8 @@
     <button onclick="calculer()">Calculer</button>
     <button onclick="resetForm()">Réinitialiser</button>
 
-    <h2>Valeurs pour la découpe du tissu (cm)</h2>
     <table>
-      <tr><th>Résultats</th></tr>
+      <tr><th>Valeurs pour la découpe du tissu (cm)</th></tr>
       <tr><td>Rayon du Grand Cercle (RGC) : <span id="rgc">-</span></td></tr>
       <tr><td>Pliure (P) : <span id="p">-</span></td></tr>
       <tr><td>Rayon du Petit Cercle (RPC) : <span id="rpc">-</span></td></tr>
@@ -132,7 +134,7 @@
 
     <div class="image-box">
       <img src="test.png" alt="Schéma de la cape avec mesures">
-      <p><em>Exemple : où mesurer le tour de cou, la longueur devant et dos...</em></p>
+      <p><em>Instructions de la prise des mesures.</em></p>
     </div>
   </div>
 
