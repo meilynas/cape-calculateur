@@ -101,11 +101,11 @@
 
     <table>
       <tr><th>Paramètres de la cape (cm)</th></tr>
-      <tr><td>Tour de Col (TC) : <input type="text" id="tc" placeholder="47"></td></tr>
+      <tr><td>Encolure (E) : <input type="text" id="E" placeholder="47"></td></tr>
       <tr><td>Longueur de la Cape devant (LDV) : <input type="text" id="ldv" placeholder="30"></td></tr>
       <tr><td>Longueur de la Cape dos (LDS) : <input type="text" id="lds" placeholder="50"></td></tr>
-      <tr><td>Ourlet du Col (OCL) : <input type="text" id="ocl" placeholder="1,5"></td></tr>
-      <tr><td>Ourlet de la Cape (OCP) : <input type="text" id="ocp" placeholder="1,5"></td></tr>
+      <tr><td>Ourlet de l'emcolure (OE) : <input type="text" id="oe" placeholder="1,5"></td></tr>
+      <tr><td>Ourlet de la Cape (OC) : <input type="text" id="oc" placeholder="1,5"></td></tr>
     </table>
 
     <button onclick="calculer()">Calculer</button>
@@ -148,16 +148,16 @@ function formatOutput(value) {
 }
 
 function calculer() {
-  let tc = parseInput(document.getElementById("tc").value);
+  let e = parseInput(document.getElementById("e").value);
   let ldv = parseInput(document.getElementById("ldv").value);
   let lds = parseInput(document.getElementById("lds").value);
-  let ocl = parseInput(document.getElementById("ocl").value);
-  let ocp = parseInput(document.getElementById("ocp").value);
+  let oe = parseInput(document.getElementById("oe").value);
+  let oc = parseInput(document.getElementById("oc").value);
 
-  let rpc = (tc / (2 * Math.PI)) - ocl;
-  let rgc = rpc + ocl + ocp + (ldv + lds) / 2;
-  let p = ldv + ocp + rpc + ocl;
-  let metrage = 2 * (rgc + rpc + ocp);
+  let rpc = (e / (2 * Math.PI)) - oe;
+  let rgc = rpc + oe + oc + (ldv + lds) / 2;
+  let p = ldv + oc + rpc + oe;
+  let metrage = 2 * (rgc + rpc + oc);
 
   document.getElementById("rpc").textContent = formatOutput(rpc);
   document.getElementById("rgc").textContent = formatOutput(rgc);
