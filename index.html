@@ -2,18 +2,17 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculateur Cape Cercle</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 2rem;
-      background: #f9f9f9;
+      background: #f7f9fc;
       color: #333;
-    }
-    h2 {
       text-align: center;
-      margin-bottom: 20px;
+      padding: 20px;
+    }
+    h1 {
+      color: #4a6fa5;
     }
     .container {
       max-width: 600px;
@@ -21,121 +20,112 @@
       background: white;
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-    th, td {
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
     }
     input {
+      padding: 8px;
       width: 100%;
-      padding: 6px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 8px;
+      margin-bottom: 15px;
     }
     button {
-      width: 100%;
-      padding: 10px;
-      background: #4CAF50;
+      background: #4a6fa5;
       color: white;
       border: none;
-      border-radius: 6px;
+      padding: 10px 20px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
+      margin: 5px;
     }
     button:hover {
-      background: #45a049;
+      background: #365781;
     }
-    .output td {
+    .output {
+      background: #eef4ff;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
       font-weight: bold;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Calculateur Cape Cercle</h2>
+    <h1>Calculateur Cape Cercle</h1>
 
-    <!-- Tableau 1 : mesures -->
-    <table>
-      <caption>Mesures finales de la cape (cm)</caption>
-      <tr>
-        <th>Tour de Col (TC)</th>
-        <td><input type="number" id="tc" placeholder="Ex: 40"></td>
-      </tr>
-      <tr>
-        <th>Longueur Cape Devant (LDV)</th>
-        <td><input type="number" id="ldv" placeholder="Ex: 60"></td>
-      </tr>
-      <tr>
-        <th>Longueur Cape Dos (LDS)</th>
-        <td><input type="number" id="lds" placeholder="Ex: 70"></td>
-      </tr>
-      <tr>
-        <th>Ourlet du Col (OCL)</th>
-        <td><input type="number" id="ocl" placeholder="Ex: 2"></td>
-      </tr>
-      <tr>
-        <th>Ourlet de la Cape (OCP)</th>
-        <td><input type="number" id="ocp" placeholder="Ex: 4"></td>
-      </tr>
-    </table>
+    <h2>Tableau 1 - Mesures finales (cm)</h2>
+    <label for="tc">Tour de Col (TC) :</label>
+    <input type="number" id="tc" step="0.1">
 
-    <button onclick="calculerCape()">Calculer</button>
+    <label for="ldv">Longueur de la Cape devant (LDV) :</label>
+    <input type="number" id="ldv" step="0.1">
 
-    <!-- Tableau 2 : output -->
-    <table class="output">
-      <caption>Valeurs pour la découpe du tissu (cm)</caption>
-      <tr>
-        <th>Rayon du Grand Cercle (RGC)</th>
-        <td id="rgc">-</td>
-      </tr>
-      <tr>
-        <th>Pliure (P)</th>
-        <td id="pliure">-</td>
-      </tr>
-      <tr>
-        <th>Rayon du Petit Cercle (RPC)</th>
-        <td id="rpc">-</td>
-      </tr>
-      <tr>
-        <th>Métrage de tissu recommandé (laize 150 cm)</th>
-        <td id="metrage">-</td>
-      </tr>
-    </table>
+    <label for="lds">Longueur de la Cape dos (LDS) :</label>
+    <input type="number" id="lds" step="0.1">
+
+    <label for="ocl">Ourlet du Col (OCL) :</label>
+    <input type="number" id="ocl" step="0.1" placeholder="ex: 1.5">
+
+    <label for="ocp">Ourlet de la Cape (OCP) :</label>
+    <input type="number" id="ocp" step="0.1" placeholder="ex: 1.5">
+
+    <button onclick="calculer()">Calculer</button>
+    <button onclick="reinitialiser()">Réinitialiser</button>
+
+    <div id="resultat" class="output"></div>
+    <div id="erreur" class="error"></div>
   </div>
 
   <script>
-    function calculerCape() {
-      const TC = parseFloat(document.getElementById('tc').value);
-      const LDV = parseFloat(document.getElementById('ldv').value);
-      const LDS = parseFloat(document.getElementById('lds').value);
-      const OCL = parseFloat(document.getElementById('ocl').value);
-      const OCP = parseFloat(document.getElementById('ocp').value);
+    function calculer() {
+      const tc = parseFloat(document.getElementById("tc").value) || 0;
+      const ldv = parseFloat(document.getElementById("ldv").value) || 0;
+      const lds = parseFloat(document.getElementById("lds").value) || 0;
+      const ocl = parseFloat(document.getElementById("ocl").value) || 0;
+      const ocp = parseFloat(document.getElementById("ocp").value) || 0;
 
-      if ([TC, LDV, LDS, OCL, OCP].some(isNaN)) {
-        alert("Merci d'entrer toutes les mesures !");
-        return;
+      // Formules
+      const rpc = (tc / (2 * Math.PI)) - ocl;
+      const rgc = rpc + ocl + ocp + (ldv + lds) / 2;
+      const pliure = ldv + ocp + rpc + ocl;
+      const metrage = rgc + rpc + ocp;
+
+      let message = `
+        Rayon du Petit Cercle (RPC) : ${rpc.toFixed(2)} cm<br>
+        Rayon du Grand Cercle (RGC) : ${rgc.toFixed(2)} cm<br>
+        Pliure (P) : ${pliure.toFixed(2)} cm<br>
+        Métrage recommandé : ${metrage.toFixed(2)} cm
+      `;
+
+      document.getElementById("resultat").innerHTML = message;
+
+      if (metrage > 75) {
+        document.getElementById("erreur").innerHTML = 
+          "⚠️ Impossible avec une laize de 150 cm. Veuillez entrer de nouvelles valeurs.";
+      } else {
+        document.getElementById("erreur").innerHTML = "";
       }
+    }
 
-      // Calculs selon tes formules
-      const RPC = (TC / (2 * Math.PI)) - OCL;
-      const RGC = RPC + OCL + OCP + (LDV + LDS)/2;
-      const P = LDV + OCP + RPC + OCL;
-      const metrage = RGC + RPC + OCP;
-
-      // Affichage
-      document.getElementById('rgc').textContent = RGC.toFixed(1);
-      document.getElementById('pliure').textContent = P.toFixed(1);
-      document.getElementById('rpc').textContent = RPC.toFixed(1);
-      document.getElementById('metrage').textContent = metrage.toFixed(1);
+    function reinitialiser() {
+      document.getElementById("tc").value = "";
+      document.getElementById("ldv").value = "";
+      document.getElementById("lds").value = "";
+      document.getElementById("ocl").value = "";
+      document.getElementById("ocp").value = "";
+      document.getElementById("resultat").innerHTML = "";
+      document.getElementById("erreur").innerHTML = "";
     }
   </script>
 </body>
