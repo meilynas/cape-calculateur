@@ -163,7 +163,7 @@ function calculer() {
   let rpc = (e / (2 * Math.PI)) - oe;
   let rgc = rpc + oe + oc + (ldv + lds) / 2;
   let p = ldv + oc + rpc + oe;
-  let metrage = 2 * (rgc + rpc + oc);
+  let metrage = (2 * rgc) + 10;
 
   document.getElementById("rpc").textContent = formatOutput(rpc);
   document.getElementById("rgc").textContent = formatOutput(rgc);
