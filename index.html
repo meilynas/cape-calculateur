@@ -103,15 +103,15 @@
       <tr><th>Paramètres de la cape (cm)</th></tr>
       <tr>
         <td>
-          Encolure (E) : <input type="text" id="e" placeholder="47">
+          Encolure (E) : <input type="text" id="e" placeholder="Ex : 56">
         <br>
-        <small><em>Suggestion : E ≥ 42 cm pour un tissu non extensible, vous devez pouvoir y passer votre tête !</em></small>
+        <small><em>Suggestion : E ≥ 47 cm pour un tissu non extensible, vous devez pouvoir y passer votre tête !</em></small>
         </td>
       </tr>
-      <tr><td>Longueur de la Cape devant (LDV) : <input type="text" id="ldv" placeholder="30"></td></tr>
-      <tr><td>Longueur de la Cape dos (LDS) : <input type="text" id="lds" placeholder="50"></td></tr>
-      <tr><td>Ourlet de l'emcolure (OE) : <input type="text" id="oe" placeholder="1,5"></td></tr>
-      <tr><td>Ourlet de la Cape (OC) : <input type="text" id="oc" placeholder="1,5"></td></tr>
+      <tr><td>Longueur de la Cape devant (LDV) : <input type="text" id="ldv" placeholder="Ex : 16,5"></td></tr>
+      <tr><td>Longueur de la Cape dos (LDS) : <input type="text" id="lds" placeholder="Ex : 36,5"></td></tr>
+      <tr><td>Ourlet de l'encolure (OE) : <input type="text" id="oe" placeholder="Ex : 1,3"></td></tr>
+      <tr><td>Ourlet de la Cape (OC) : <input type="text" id="oc" placeholder="Ex : 1,3"></td></tr>
     </table>
 
     <button onclick="calculer()">Calculer</button>
@@ -132,15 +132,15 @@
     <p>© 2025 @Meilynas. Cet outil est mis gratuitement à disposition pour un usage personnel uniquement. 
     Toute reproduction ou utilisation commerciale sans autorisation est interdite.</p>
 
-    <p> Pour les instructions de coupe et de montage, référez-vous à ce réel Instagram :  
+    <p> Pour les instructions de coupe et de montage, référez-vous à ce Reel Instagram :  
     <a href="#">Tutoriel Couture d'une Cape @meilynas</a></p>
 
-    <p> Pour toute question, contactez-moi sur Instagram :  
+    <p> Pour toutes questions, contactez-moi sur Instagram :  
     <a href="https://www.instagram.com/meilynas/" target="_blank">@meilynas</a></p>
 
     <div class="image-box">
-      <img src="test.png" alt="Schéma de la cape avec mesures">
-      <p><em>Instructions sur la prise des mesures.</em></p>
+      <img src="Schema_Cape.png" alt="Schéma de la cape avec mesures">
+      <p><em>Schéma des mesures nécessaires pour la couture de la cape.</em></p>
     </div>
   </div>
 
@@ -171,7 +171,7 @@ function calculer() {
 
   if (metrage > 150) {
     document.getElementById("metrage").textContent = "-";
-    document.getElementById("warning").textContent = "⚠️ Impossible avec une laize de 150 cm, votre cape est trop longue. Veuillez entrer de nouvelles valeurs.";
+    document.getElementById("warning").textContent = "⚠️ Impossible pour une laize de 150 cm, votre cape est trop longue. Veuillez entrer de nouvelles valeurs.";
   } else {
     document.getElementById("metrage").textContent = formatOutput(metrage);
     document.getElementById("warning").textContent = "";
