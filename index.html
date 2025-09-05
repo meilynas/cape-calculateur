@@ -156,6 +156,26 @@ function formatOutput(value) {
 }
 
 function calculer() {
+
+  let eVal = document.getElementById("e").value;
+  let ldvVal = document.getElementById("ldv").value;
+  let ldsVal = document.getElementById("lds").value;
+  let oeVal = document.getElementById("oe").value;
+  let ocVal = document.getElementById("oc").value;
+
+  // Vérifier si tous les champs sont remplis
+  if (!eVal || !ldvVal || !ldsVal || !oeVal || !ocVal) {
+    document.getElementById("warning").textContent = "⚠️ Merci de remplir toutes les champs avant de lancer le calcul.";
+    // Réinitialiser les résultats
+    document.getElementById("rpc").textContent = "-";
+    document.getElementById("rgc").textContent = "-";
+    document.getElementById("p").textContent = "-";
+    document.getElementById("metrage").textContent = "-";
+    return; // Stoppe la fonction
+  }
+  
+
+  // Si tout est rempli, parse et calcule   
   let e = parseInput(document.getElementById("e").value);
   let ldv = parseInput(document.getElementById("ldv").value);
   let lds = parseInput(document.getElementById("lds").value);
