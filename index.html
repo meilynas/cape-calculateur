@@ -38,9 +38,20 @@
       text-align: center;
       padding: 10px;
     }
+    table tr:first-child th {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+    table tr:last-child td {
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }    
     td {
       padding: 8px 10px;
       border-bottom: 1px solid #ddd;
+    }
+    table tr:last-child td {
+      border-bottom: none;
     }
     input {
       width: 100%;
